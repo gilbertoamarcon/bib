@@ -21,13 +21,13 @@ blacklist = set([
 					'isbn',
 					'issn',
 					'doi',
+					'month',
 				])
 
-formats = {
+formats =	{
 				'year': ('(\d{4})', '%s'),
 				'pages': ('(\d+)\D+(\d+)', '%s--%s'),
-	
-}
+			}
 
 # Raw file read
 key = None
@@ -51,6 +51,10 @@ for n, line in enumerate(file):
 	if len(regex) > 0 and len(regex[0]) >= 2:
 			category	= regex[0][0].lower()
 			data		= regex[0][1]
+
+			# Upper Case
+			data = re.sub(r'{|}', r'', data)
+			data = re.sub(r'([A-Z][A-Z]+)', r'{\1}', data)
 
 			# Valid category
 			if category not in blacklist:
