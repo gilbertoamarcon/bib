@@ -6,6 +6,7 @@ import re
 # File names
 RAW_FILENAME = 'raw.bib'
 OUT_FILENAME = 'bib.bib'
+TEX_FILENAME = 'main.tex'
 
 # Regex
 ENTRY_BEG = '^@(.+){(.+),'
@@ -14,6 +15,7 @@ ENTRY_DATA = '(\w+)\s*=\s*{(.+)}'
 # Format
 TAB_SIZE = 4
 DATA_FORMAT = '%s = {%s},\n'
+TEX_FORMAT = '\citet{%s}\n\n'
 
 # Blacklist
 blacklist = set([
@@ -71,7 +73,8 @@ for n, line in enumerate(file):
 
 file.close()
 
-# Compiling output
+
+# Compiling bib output
 buf = ''
 for e in dataset:
 
@@ -92,4 +95,12 @@ for e in dataset:
 
 # Filtered file writing
 with open(OUT_FILENAME, 'wb') as file:
+	file.write(buf)
+
+
+# Compiling tex output
+buf = ''.join([TEX_FORMAT % e for e in dataset])
+
+# Filtered file writing
+with open(TEX_FILENAME, 'wb') as file:
 	file.write(buf)
