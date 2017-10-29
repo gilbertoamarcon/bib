@@ -20,6 +20,7 @@ TEX_FORMAT = '\citet{%s}\n\n'
 # Blacklist
 blacklist = set([
 					'category',
+					'keywords',
 					'isbn',
 					'issn',
 					'doi',
